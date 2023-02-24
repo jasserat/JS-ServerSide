@@ -25,7 +25,17 @@ const getAllStudents = (req, res) => {
 };
 
 const getStudents = (req, res) => {
-    student.find({Age:{$gt:18}},(err, data) => {
+    student.find({Age:{$gte:18}},(err, data) => {
+        if (err) {
+            res.status(500).send({ message: err.message || "Some error occurred while retrieving students." });
+        } else {
+            res.json(data);
+        }
+    });
+};
+
+const getStudentsNameSort = (req, res) => {
+    student.find({Note:{$gte:10}}).sort({Name:1}).exec((err, data) => {
         if (err) {
             res.status(500).send({ message: err.message || "Some error occurred while retrieving students." });
         } else {
@@ -91,4 +101,4 @@ const updateStudent = (req, res) => {
     });
 };
 
-module.exports = {addStudent, getAllStudents, getStudents, getStudent, getStudentByName, deleteStudent, updateStudent};
+module.exports = {addStudent, getAllStudents, getStudents, getStudentsNameSort, getStudent, getStudentByName, deleteStudent, updateStudent};

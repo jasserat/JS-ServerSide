@@ -1,13 +1,15 @@
 const express = require('express');
 const router = express.Router();
 
-var {addStudent, getAllStudents, getStudents, getStudent, getStudentByName, deleteStudent, updateStudent} = require('../services/studentS');
+var {addStudent, getAllStudents, getStudents, getStudentsNameSort, getStudent, getStudentByName, deleteStudent, updateStudent} = require('../services/studentS');
 
 router.post('/add', addStudent);
 
 router.get('/showall', getAllStudents);
 
 router.get('/show', getStudents);
+
+router.get('/showsort', getStudentsNameSort);
 
 router.get('/show/:id', getStudent);
 
