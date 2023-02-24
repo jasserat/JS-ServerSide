@@ -14,6 +14,16 @@ const addStudent = (req, res) => {
     });
 };
 
+const getAllStudents = (req, res) => {
+    student.find((err, data) => {
+        if (err) {
+            res.status(500).send({ message: err.message || "Some error occurred while retrieving students." });
+        } else {
+            res.json(data);
+        }
+    });
+};
+
 const getStudents = (req, res) => {
     student.find({Age:{$gt:18}},(err, data) => {
         if (err) {
@@ -81,4 +91,4 @@ const updateStudent = (req, res) => {
     });
 };
 
-module.exports = {addStudent, getStudents, getStudent, getStudentByName, deleteStudent, updateStudent};
+module.exports = {addStudent, getAllStudents, getStudents, getStudent, getStudentByName, deleteStudent, updateStudent};

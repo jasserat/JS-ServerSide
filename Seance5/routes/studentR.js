@@ -1,9 +1,11 @@
 const express = require('express');
 const router = express.Router();
 
-var {addStudent, getStudents, getStudent, getStudentByName, deleteStudent, updateStudent} = require('../services/studentS');
+var {addStudent, getAllStudents, getStudents, getStudent, getStudentByName, deleteStudent, updateStudent} = require('../services/studentS');
 
 router.post('/add', addStudent);
+
+router.get('/showall', getAllStudents);
 
 router.get('/show', getStudents);
 
