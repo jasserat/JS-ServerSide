@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Chat</title>
+    <script src="/socket.io/socket.io.js"> </script>
+</head>
+<body>
+
+    <label> Msg : </label>
+    <input id="message" onkeyup="onKeyDownNotEnter()" type="text">
+    <input onclick="send()" type="submit">
+
+    <script>
+        const socket = io.connect();
+        const username  = prompt("Your username");
+
+        socket.on("msg", (data) => {
+            console.log("message", data);
+            let p = document.createElement("p");
+            p.innerText = data;
+            document.body.append(p);
+        });
+
+        function send() {
+            let message = document.getElementById("message");
+            socket.emit("msg", `${username} :  ${message.value}`);
+        }
+
+        var typing = false;
+        var timeout = undefined;
+
+        function timeoutFunction(){
+            typing = false;
+            socket.emit("msg",`${username}  has stoped typing..`);
+        }
+
+        function onKeyDownNotEnter(){
+            if(typing == false) {
+                typing = true
+                socket.emit("msg", `${username}  is typing..`);
+                timeout = setTimeout(timeoutFunction, 2000);
+            } else {
+                clearTimeout(timeout);
+                timeout = setTimeout(timeoutFunction, 2000);
+            }
+        }
+
+    </script>
+</body>
+</html>
